@@ -5,10 +5,12 @@ const Web3 = require("web3");
 require("dotenv").config();
 const port = process.env.PORT || 3000;
 
-const RPC_ENDPOINT = "";
-const ORIGIN_CONTRACT_ADDRESS = "";
-const WALLET_ADDRESS = "";
-const WALLET_KEY = "";
+const RPC_ENDPOINT =
+  "https://sepolia.infura.io/v3/3b9ddf92806a40b1a08daf6933086885";
+const ORIGIN_CONTRACT_ADDRESS = "0xA64CDe06fFc21CDDc03399aca4BbA7df39A0acf6";
+const WALLET_ADDRESS = "0x998235F53F383A8E0C103B73f6Ee903a8B85E0a2";
+const WALLET_KEY =
+  "0x369d90e79792c70501628ba0d89e06cf7ead277dd08e84c45a544b0849ff046d";
 
 let abi = [
   {
@@ -22,11 +24,6 @@ let abi = [
         internalType: "uint256",
         name: "_phone",
         type: "uint256",
-      },
-      {
-        internalType: "string",
-        name: "_email",
-        type: "string",
       },
       {
         internalType: "uint256",
@@ -63,11 +60,6 @@ let abi = [
         name: "_complaintDocument",
         type: "string",
       },
-      {
-        internalType: "string",
-        name: "_status",
-        type: "string",
-      },
     ],
     name: "createFIR",
     outputs: [],
@@ -95,18 +87,18 @@ let abi = [
   {
     inputs: [
       {
-        internalType: "string",
-        name: "_email",
-        type: "string",
+        internalType: "uint256",
+        name: "_aadhar",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_index",
+        type: "uint256",
       },
       {
         internalType: "string",
         name: "_complaintDocument",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_status",
         type: "string",
       },
     ],
@@ -118,9 +110,14 @@ let abi = [
   {
     inputs: [
       {
-        internalType: "string",
+        internalType: "uint256",
         name: "",
-        type: "string",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     name: "FIR_Documents",
@@ -134,11 +131,6 @@ let abi = [
         internalType: "uint256",
         name: "phone",
         type: "uint256",
-      },
-      {
-        internalType: "string",
-        name: "email",
-        type: "string",
       },
       {
         internalType: "uint256",
@@ -176,11 +168,6 @@ let abi = [
         type: "string",
       },
       {
-        internalType: "string",
-        name: "status",
-        type: "string",
-      },
-      {
         internalType: "uint256",
         name: "timestamp",
         type: "uint256",
@@ -205,9 +192,14 @@ let abi = [
   {
     inputs: [
       {
-        internalType: "string",
-        name: "_email",
-        type: "string",
+        internalType: "uint256",
+        name: "_aadhar",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_index",
+        type: "uint256",
       },
     ],
     name: "getFIRDocument",
@@ -223,11 +215,6 @@ let abi = [
             internalType: "uint256",
             name: "phone",
             type: "uint256",
-          },
-          {
-            internalType: "string",
-            name: "email",
-            type: "string",
           },
           {
             internalType: "uint256",
@@ -265,11 +252,6 @@ let abi = [
             type: "string",
           },
           {
-            internalType: "string",
-            name: "status",
-            type: "string",
-          },
-          {
             internalType: "uint256",
             name: "timestamp",
             type: "uint256",
@@ -286,9 +268,14 @@ let abi = [
   {
     inputs: [
       {
-        internalType: "string",
-        name: "_email",
-        type: "string",
+        internalType: "uint256",
+        name: "_aadhar",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_index",
+        type: "uint256",
       },
     ],
     name: "getFIRDocumentComplaintDocument",
@@ -318,17 +305,88 @@ let abi = [
   {
     inputs: [
       {
-        internalType: "string",
-        name: "_email",
-        type: "string",
+        internalType: "uint256",
+        name: "_aadhar",
+        type: "uint256",
       },
     ],
-    name: "getFIRDocumentStatus",
+    name: "getUserAllComplaints",
     outputs: [
       {
-        internalType: "string",
+        components: [
+          {
+            internalType: "string",
+            name: "name",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "phone",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "aadhar",
+            type: "uint256",
+          },
+          {
+            internalType: "string",
+            name: "pan",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "city",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "pincode",
+            type: "uint256",
+          },
+          {
+            internalType: "string",
+            name: "policeStation",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "description",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "complaintDocument",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "timestamp",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct FIR.FIR_Document[]",
         name: "",
-        type: "string",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_aadhar",
+        type: "uint256",
+      },
+    ],
+    name: "getUserComplaintCount",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     stateMutability: "view",
@@ -342,6 +400,25 @@ let abi = [
         internalType: "address",
         name: "",
         type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "userFIRCount",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     stateMutability: "view",
@@ -371,7 +448,6 @@ app.post("/createFIR", async (req, res) => {
   const {
     name,
     phone,
-    email,
     aadhar,
     pan,
     city,
@@ -379,14 +455,12 @@ app.post("/createFIR", async (req, res) => {
     policeStation,
     description,
     complaintDocument,
-    status,
   } = req.body;
   try {
     console.log("Creating FIR Document");
     const trx = await tokenContract.methods.createFIR(
       name,
       phone,
-      email,
       aadhar,
       pan,
       city,
@@ -394,7 +468,6 @@ app.post("/createFIR", async (req, res) => {
       policeStation,
       description,
       complaintDocument,
-      status,
     );
     const gas = await trx.estimateGas({ from: WALLET_ADDRESS });
     const gasPrice = await web3Provider.eth.getGasPrice();
@@ -429,23 +502,12 @@ app.get("/getFIRDocumentsCount", async (req, res) => {
   }
 });
 
-app.get("/getFIRDocument/:email", async (req, res) => {
+app.get("/getFIRDocument/:aadhar/:id", async (req, res) => {
   try {
     console.log("Getting FIR Document");
-    const trx = await tokenContract.methods.getFIRDocument(req.params.email);
-    const data = await trx.call();
-    console.log(data);
-    res.send(data);
-  } catch (err) {
-    console.log(err);
-  }
-});
-
-app.get("/getFIRDocumentStatus/:email", async (req, res) => {
-  try {
-    console.log("Getting FIR Document Status");
-    const trx = await tokenContract.methods.getFIRDocumentStatus(
-      req.params.email,
+    const trx = await tokenContract.methods.getFIRDocument(
+      req.params.aadhar,
+      req.params.id,
     );
     const data = await trx.call();
     console.log(data);
@@ -455,11 +517,26 @@ app.get("/getFIRDocumentStatus/:email", async (req, res) => {
   }
 });
 
-app.get("/getFIRDocumentComplaintDocument/:email", async (req, res) => {
+// app.get("/getFIRDocumentStatus/:aadhar", async (req, res) => {
+//   try {
+//     console.log("Getting FIR Document Status");
+//     const trx = await tokenContract.methods.getFIRDocumentStatus(
+//       req.params.aadhar,
+//     );
+//     const data = await trx.call();
+//     console.log(data);
+//     res.send(data);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// });
+
+app.get("/getFIRDocumentComplaintDocument/:aadhar/:id", async (req, res) => {
   try {
     console.log("Getting FIR Document Complaint Document");
     const trx = await tokenContract.methods.getFIRComplaintDocument(
-      req.params.email,
+      req.params.aadhar,
+      req.params.id,
     );
     const data = await trx.call();
     console.log(data);
@@ -469,13 +546,13 @@ app.get("/getFIRDocumentComplaintDocument/:email", async (req, res) => {
   }
 });
 
-app.post("/updateFIRDocumentStatus", async (req, res) => {
-  const { email, status, complaintDocument } = req.body;
+app.post("/updateFIRDocument", async (req, res) => {
+  const { aadhar, id, complaintDocument } = req.body;
   try {
     console.log("Updating FIR Document Status");
-    const trx = await tokenContract.methods.updateFIRDocumentStatus(
-      email,
-      status,
+    const trx = await tokenContract.methods.updateFIR(
+      aadhar,
+      id,
       complaintDocument,
     );
     const gas = await trx.estimateGas({ from: WALLET_ADDRESS });
@@ -496,6 +573,34 @@ app.post("/updateFIRDocumentStatus", async (req, res) => {
   } catch (err) {
     console.log(err);
     res.send(err);
+  }
+});
+
+app.get("/getUserComplaintsCount/:aadhar", async (req, res) => {
+  try {
+    console.log("Getting User Complaints Count");
+    const trx = await tokenContract.methods.getUserComplaintCount(
+      req.params.aadhar,
+    );
+    const data = await trx.call();
+    console.log(data);
+    res.send(data);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.get("/getUserAllComplaints/:aadhar", async (req, res) => {
+  try {
+    console.log("Getting User All Complaints");
+    const trx = await tokenContract.methods.getUserAllComplaints(
+      req.params.aadhar,
+    );
+    const data = await trx.call();
+    console.log(data);
+    res.send(data);
+  } catch (err) {
+    console.log(err);
   }
 });
 
